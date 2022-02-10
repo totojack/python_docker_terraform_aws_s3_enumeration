@@ -1,8 +1,9 @@
 import boto3
+import os
 
 session = boto3.Session( 
-         aws_access_key_id='<your_access_key_id>', 
-         aws_secret_access_key='<your_secret_access_key>')
+         aws_access_key_id=os.getenv('AWS_ACCESS_KEY'), 
+         aws_secret_access_key=os.getenv('AWS_SECRET_KEY'))
 
 s3 = session.resource('s3')
 
