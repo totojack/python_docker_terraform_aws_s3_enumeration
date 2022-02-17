@@ -21,6 +21,10 @@
 - run docker image locally (env vars must be configured AWS_ACCESS_KEY AWS_SECRET_KEY):
   > make run
 
+- run docker image as cronjob into minikube:
+  > make mkloadimage
+  > make mkcreatejob
+  > make mkgetjobstatus
 
 ## CI/CD SETUP
 
@@ -40,3 +44,33 @@ Pipeline steps:
 
 - load credentials from an external service (AWS System Manager - Parameters store); but the container needs an IAM role to load them
 - add a role to the container to be able to list the S3 bucket content
+
+## IMPROVEMENTS
+
+### TERRAFORM
+
+- save tfstate to a custom S3 backend to share it across team/CICD
+
+```
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "path/to/my/key"
+    region = "us-east-1"
+  }
+}
+```
+
+- use DynamoDB table for locking
+- use Terraform workspaces to manage a Multi-account AWS Architecture
+
+### DOCKER
+
+- use multi-stage Dockerfile
+- set a USER in the Dockerfile
+
+### SECURITY
+
+- user namespaces
+- kernel capabilities
+- read only filesystem

@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: python-s3-enumerator
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: python-s3-enumerator
+            image: python_s3_enumerator:latest
+            imagePullPolicy: IfNotPresent
+          restartPolicy: OnFailure
